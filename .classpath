@@ -24,29 +24,12 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="/pip-services-commons-java"/>
-	<classpathentry kind="lib" path="C:/Users/Egor Nuzhnykh/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.7.0/jackson-annotations-2.7.0.jar" sourcepath="C:/Users/Egor Nuzhnykh/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.7.0/jackson-annotations-2.7.0-sources.jar">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="maven.groupId" value="com.fasterxml.jackson.core"/>
-			<attribute name="maven.artifactId" value="jackson-annotations"/>
-			<attribute name="maven.version" value="2.7.0"/>
-			<attribute name="maven.scope" value="compile"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Egor Nuzhnykh/.m2/repository/org/mongodb/bson/3.6.4/bson-3.6.4.jar" sourcepath="C:/Users/Egor Nuzhnykh/.m2/repository/org/mongodb/bson/3.6.4/bson-3.6.4-sources.jar">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="maven.groupId" value="org.mongodb"/>
-			<attribute name="maven.artifactId" value="bson"/>
-			<attribute name="maven.version" value="3.6.4"/>
-			<attribute name="maven.scope" value="compile"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="src" path="/pip-services-data-java"/>
 	<classpathentry kind="src" path="/pip-services-components-java"/>
 	<classpathentry kind="src" path="/pip-services-mongodb-java"/>
 	<classpathentry kind="src" path="/pip-services-rpc-java"/>
 	<classpathentry kind="src" path="/pip-services-container-java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="C:/Users/Egor Nuzhnykh/.m2/repository/com/sun/jersey/jersey-json/1.9/jersey-json-1.9.jar" sourcepath="C:/Users/Egor Nuzhnykh/.m2/repository/com/sun/jersey/jersey-json/1.9/jersey-json-1.9-sources.jar">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
