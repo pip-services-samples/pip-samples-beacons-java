@@ -31,8 +31,8 @@ public class BeaconsControllerTest {
         _persistence = new BeaconsMemoryPersistence(null);
         _persistence.configure(new ConfigParams());
 
-        references.put(new Descriptor("pip-samples-beacons", "persistence", "memory", "*", "1.0"), _persistence);
-        references.put(new Descriptor("pip-samples-beacons", "controller", "default", "*", "1.0"), _controller);
+        references.put(new Descriptor("pip-beacons", "persistence", "memory", "*", "1.0"), _persistence);
+        references.put(new Descriptor("pip-beacons", "controller", "default", "*", "1.0"), _controller);
 
         _controller.setReferences(references);
     }

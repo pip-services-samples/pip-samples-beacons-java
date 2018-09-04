@@ -1,10 +1,10 @@
-package step7.org.src.build;
+package beacons.build;
 
 import org.pipservices.components.build.Factory;
 
-import step7.org.src.logic.BeaconsController;
-import step7.org.src.persistence.*;
-import step7.org.src.services.BeaconsHttpServiceV1;
+import beacons.logic.BeaconsController;
+import beacons.persistence.*;
+import beacons.services.*;
 
 import org.pipservices.commons.refer.Descriptor;
 
@@ -21,6 +21,6 @@ public class BeaconsServiceFactory extends Factory{
         registerAsType(MemoryPersistenceDescriptor, BeaconsMemoryPersistence.class);
         registerAsType(MongoDbPersistenceDescriptor, BeaconsMongoDbPersistence.class);
         registerAsType(ControllerDescriptor, BeaconsController.class);
-        registerAsType(HttpServiceDescriptor, BeaconsHttpServiceV1.class);            
+        //registerAsType(HttpServiceDescriptor, BeaconsHttpServiceV1.class);            
     }
 }

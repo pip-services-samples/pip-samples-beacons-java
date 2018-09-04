@@ -20,7 +20,7 @@ public class BeaconsController implements ICommandable, IBeaconsController {
 	}
 
     public BeaconsController() {
-        _dependencyResolver = new DependencyResolver(ConfigParams.fromTuples("dependencies.persistence", "samples-beacons:persistence:*:*:1.0"));
+        _dependencyResolver = new DependencyResolver(ConfigParams.fromTuples("dependencies.persistence", "beacons:persistence:*:*:1.0"));
     }
 
     public void setReferences(IReferences references) throws ReferenceException {

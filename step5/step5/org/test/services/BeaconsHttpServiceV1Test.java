@@ -44,9 +44,9 @@ public class BeaconsHttpServiceV1Test {
         _service = new BeaconsHttpServiceV1();
 
         IReferences references = References.fromTuples(
-            new Descriptor("pip-samples-beacons", "persistence", "memory", "default", "1.0"), _persistence,
-            new Descriptor("pip-samples-beacons", "controller", "default", "default", "1.0"), _controller,
-            new Descriptor("pip-samples-beacons", "service", "http", "default", "1.0"), _service
+            new Descriptor("pip-beacons", "persistence", "memory", "default", "1.0"), _persistence,
+            new Descriptor("pip-beacons", "controller", "default", "default", "1.0"), _controller,
+            new Descriptor("pip-beacons", "service", "http", "default", "1.0"), _service
         );
 
         _controller.setReferences(references);

@@ -10,11 +10,11 @@ import org.pipservices.commons.refer.Descriptor;
 
 public class BeaconsServiceFactory extends Factory{
 
-	public static Descriptor Descriptor = new Descriptor("pip-samples-beacons", "factory", "service", "default", "1.0");
-    public static Descriptor MemoryPersistenceDescriptor = new Descriptor("pip-samples-beacons", "persistence", "memory", "*", "1.0");
-    public static Descriptor MongoDbPersistenceDescriptor = new Descriptor("pip-samples-beacons", "persistence", "mongodb", "*", "1.0");
-    public static Descriptor ControllerDescriptor = new Descriptor("pip-samples-beacons", "controller", "default", "*", "1.0");
-    public static Descriptor HttpServiceDescriptor = new Descriptor("pip-samples-beacons", "service", "http", "*", "1.0");
+	public static Descriptor Descriptor = new Descriptor("pip-beacons", "factory", "service", "default", "1.0");
+    public static Descriptor MemoryPersistenceDescriptor = new Descriptor("pip-beacons", "persistence", "memory", "*", "1.0");
+    public static Descriptor MongoDbPersistenceDescriptor = new Descriptor("pip-beacons", "persistence", "mongodb", "*", "1.0");
+    public static Descriptor ControllerDescriptor = new Descriptor("pip-beacons", "controller", "default", "*", "1.0");
+    public static Descriptor HttpServiceDescriptor = new Descriptor("pip-beacons", "service", "http", "*", "1.0");
 
 
     public BeaconsServiceFactory() {

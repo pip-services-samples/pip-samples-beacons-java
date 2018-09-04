@@ -1,4 +1,4 @@
-package step4.org.test.logic;
+package beacons.logic;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -12,10 +12,10 @@ import org.pipservices.commons.data.*;
 import org.pipservices.commons.errors.ApplicationException;
 import org.pipservices.commons.refer.*;
 
-import step4.org.src.interfaces.data.version1.BeaconV1;
-import step4.org.src.logic.BeaconsController;
-import step4.org.src.persistence.BeaconsMemoryPersistence;
-import step4.org.test.interfaces.data.version1.TestModel;
+import beacons.data.version1.BeaconV1;
+import beacons.logic.BeaconsController;
+import beacons.persistence.BeaconsMemoryPersistence;
+import beacons.data.version1.TestModel;
 
 
 public class BeaconsControllerTest {
@@ -42,7 +42,7 @@ public class BeaconsControllerTest {
 
         BeaconV1 beacon = TestModel.createBeacon();
 
-        BeaconV1 result = _controller.create(null, beacon);
+        BeaconV1 result = _controller.createBeacon(null, beacon);
 
         TestModel.assertEqual(beacon, result);
 
@@ -50,12 +50,12 @@ public class BeaconsControllerTest {
 
     @Test
     public void itShouldUpdateBeacon() {
-    	BeaconV1 beacon = _controller.create(null, TestModel.createBeacon());
+    	BeaconV1 beacon = _controller.createBeacon(null, TestModel.createBeacon());
 
         beacon.setLabel("Update Label");
         beacon.setType("Update Type");
 
-        BeaconV1 result = _controller.update(null, beacon);
+        BeaconV1 result = _controller.updateBeacon(null, beacon);
 
         TestModel.assertEqual(beacon, result);
 
@@ -63,10 +63,10 @@ public class BeaconsControllerTest {
 
     @Test
     public void itShouldDeleteBeacon() {
-    	BeaconV1 beacon = _controller.create(null, TestModel.createBeacon());
+    	BeaconV1 beacon = _controller.createBeacon(null, TestModel.createBeacon());
 
-    	BeaconV1 deletedBeacon = _controller.deleteById(null, beacon.getId());
-    	BeaconV1 result = _controller.getOneById(null, beacon.getId());
+    	BeaconV1 deletedBeacon = _controller.deleteBeaconById(null, beacon.getId());
+    	BeaconV1 result = _controller.getBeaconsById(null, beacon.getId());
 
         TestModel.assertEqual(beacon, deletedBeacon);
         assertNull(result);
@@ -74,9 +74,9 @@ public class BeaconsControllerTest {
 
     @Test
     public void itShouldGetBeaconById() {
-    	BeaconV1 beacon = _controller.create(null, TestModel.createBeacon());
+    	BeaconV1 beacon = _controller.createBeacon(null, TestModel.createBeacon());
 
-    	BeaconV1 result = _controller.getOneById(null, beacon.getId());
+    	BeaconV1 result = _controller.getBeaconsById(null, beacon.getId());
 
         TestModel.assertEqual(beacon, result);
 
@@ -84,9 +84,9 @@ public class BeaconsControllerTest {
 
     @Test
     public void itShouldGetBeaconByUdi() {
-    	BeaconV1 beacon = _controller.create(null, TestModel.createBeacon());
+    	BeaconV1 beacon = _controller.createBeacon(null, TestModel.createBeacon());
 
-    	BeaconV1 result = _controller.getOneById(null, beacon.getUdi());
+    	BeaconV1 result = _controller.getBeaconsById(null, beacon.getUdi());
 
         TestModel.assertEqual(beacon, result);
 
@@ -105,7 +105,7 @@ public class BeaconsControllerTest {
     	PagingParams paging = new PagingParams();
 
         
-    	DataPage<BeaconV1> result = _controller.getPageByFilter(null, filter, paging);
+    	DataPage<BeaconV1> result = _controller.getBeaconsByFilter(null, filter, paging);
     	assertNotNull(result);
     	assertEquals(beacons.getTotal(), result.getTotal());
     }
