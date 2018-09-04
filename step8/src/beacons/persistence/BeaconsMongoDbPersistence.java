@@ -28,7 +28,7 @@ public class BeaconsMongoDbPersistence extends IdentifiableMongoDbPersistence<Be
 		if (id != null)
 			filters.add(Filters.eq("_id", id));
 
-		String siteId = filterParams.getAsNullableString("siteId");
+		String siteId = filterParams.getAsNullableString("site_id");
 		if (siteId != null)
 			filters.add(Filters.eq("site_id", siteId));
 
