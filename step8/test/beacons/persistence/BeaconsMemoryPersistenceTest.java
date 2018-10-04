@@ -19,7 +19,7 @@ public class BeaconsMemoryPersistenceTest {
 	public void setFixture(BeaconsPersistenceFixture fixture) { this.fixture = fixture; }
     
     public BeaconsMemoryPersistenceTest() throws ApplicationException {
-        persistence = new BeaconsMemoryPersistence(BeaconV1.class);
+        persistence = new BeaconsMemoryPersistence();
         persistence.configure(new ConfigParams());
         fixture = new BeaconsPersistenceFixture(persistence);
         persistence.open(null);
@@ -32,6 +32,6 @@ public class BeaconsMemoryPersistenceTest {
 
     @Test
     public void testGetWithFilter() throws ApplicationException {
-        fixture.testGetWithFilter();;
+        fixture.testGetWithFilter();
     }
 }

@@ -8,7 +8,7 @@ import org.pipservices.commons.data.IdGenerator;
 import org.pipservices.commons.data.PagingParams;
 
 import beacons.data.version1.BeaconV1;
-import beacons.data.version1.CenterObject;
+import beacons.data.version1.CenterObjectV1;
 
 public class BeaconsNullClientV1 implements IBeaconsClientV1 {
 
@@ -44,8 +44,8 @@ public class BeaconsNullClientV1 implements IBeaconsClientV1 {
 	}
 
 	@Override
-	public CenterObject calculatePosition(String correlationId, String siteId, String[] udis) {
-		return new CenterObject();
+	public CenterObjectV1 calculatePosition(String correlationId, String siteId, String[] udis) {
+		return new CenterObjectV1();
 	}
 
 }

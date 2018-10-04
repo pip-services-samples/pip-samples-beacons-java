@@ -25,7 +25,7 @@ public class BeaconsHttpClientV1Test {
 
 	@Before
 	public void setUp() throws Exception {
-		_persistence = new BeaconsMemoryPersistence(BeaconV1.class);
+		_persistence = new BeaconsMemoryPersistence();
 		_controller = new BeaconsController();
 		_client = new BeaconsHttpClientV1();
 		_service = new BeaconsHttpServiceV1();

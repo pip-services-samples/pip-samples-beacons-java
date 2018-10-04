@@ -3,11 +3,10 @@ package beacons.clients;
 import org.pipservices.commons.data.*;
 import org.pipservices.commons.errors.ApplicationException;
 import org.pipservices.commons.refer.Descriptor;
-import org.pipservices.components.count.Timing;
 import org.pipservices.rpc.clients.DirectClient;
 
 import beacons.data.version1.BeaconV1;
-import beacons.data.version1.CenterObject;
+import beacons.data.version1.CenterObjectV1;
 import beacons.logic.IBeaconsController;
 
 public class BeaconsDirectClientV1 extends DirectClient<IBeaconsController> implements IBeaconsClientV1 {
@@ -33,13 +32,13 @@ public class BeaconsDirectClientV1 extends DirectClient<IBeaconsController> impl
 	}
 
 	@Override
-	public BeaconV1 getBeaconByUdi(String correlationId, String udi) {
+	public BeaconV1 getBeaconByUdi(String correlationId, String udi) throws ApplicationException {
 		return _controller.getBeaconsByUdi(correlationId, udi);
 	}
 
 
 	@Override
-	public CenterObject calculatePosition(String correlationId, String siteId, String[] udis) throws ApplicationException {
+	public CenterObjectV1 calculatePosition(String correlationId, String siteId, String[] udis) throws ApplicationException {
 		return _controller.calculatePosition(correlationId, siteId, udis);
 	}
 	

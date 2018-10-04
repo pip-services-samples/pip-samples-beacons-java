@@ -23,7 +23,7 @@ public class BeaconsDirectClientV1Test {
 	
 	@Before
 	public void setUp() throws Exception {
-		_persistence = new BeaconsMemoryPersistence(BeaconV1.class);
+		_persistence = new BeaconsMemoryPersistence();
 		_persistence.configure(new ConfigParams());
 		
 		_controller = new BeaconsController();

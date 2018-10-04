@@ -47,12 +47,12 @@ public class BeaconsController implements IReferenceable, ICommandable, IBeacons
 	}
 
 	@Override
-	public BeaconV1 getBeaconsByUdi(String correlationId, String udi) {
+	public BeaconV1 getBeaconsByUdi(String correlationId, String udi) throws ApplicationException {
 		return _persistence.getOneByUdi(correlationId, udi);
 	}
 
 	@Override
-	public CenterObject calculatePosition(String correlationId, String siteId, String[] udis)
+	public CenterObjectV1 calculatePosition(String correlationId, String siteId, String[] udis)
 			throws ApplicationException {
 		if (udis == null || udis.length == 0)
 			return null;
@@ -75,7 +75,7 @@ public class BeaconsController implements IReferenceable, ICommandable, IBeacons
 		}
 
 		if (count > 0) {
-			CenterObject position = new CenterObject("Point", new double[] { lng / count, lat / count });
+			CenterObjectV1 position = new CenterObjectV1("Point", new double[] { lng / count, lat / count });
 			return position;
 		}
 

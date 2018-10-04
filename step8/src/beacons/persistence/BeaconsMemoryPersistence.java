@@ -12,8 +12,8 @@ import beacons.data.version1.BeaconV1;
 public class BeaconsMemoryPersistence extends IdentifiableMemoryPersistence<BeaconV1, String>
 	implements IBeaconsPersistence {
 
-	public BeaconsMemoryPersistence(Class<BeaconV1> type) {
-		super(type);
+	public BeaconsMemoryPersistence() {
+		super(BeaconV1.class);
 		_maxPageSize = 100;
 	}
 

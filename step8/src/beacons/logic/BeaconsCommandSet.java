@@ -3,12 +3,9 @@ package beacons.logic;
 import java.io.IOException;
 
 import org.pipservices.commons.commands.*;
-import org.pipservices.commons.convert.JsonConverter;
-import org.pipservices.commons.convert.TypeCode;
+import org.pipservices.commons.convert.*;
 import org.pipservices.commons.data.*;
 import org.pipservices.commons.validate.*;
-
-import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 
 import beacons.data.version1.*;
 

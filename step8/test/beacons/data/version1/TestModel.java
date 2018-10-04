@@ -7,7 +7,7 @@ import java.util.*;
 import org.pipservices.commons.random.*;
 
 import beacons.data.version1.BeaconV1;
-import beacons.data.version1.CenterObject;
+import beacons.data.version1.CenterObjectV1;
 
 
 public class TestModel {
@@ -18,7 +18,7 @@ public class TestModel {
         String type = RandomText.word();
         String udi = RandomString.nextString(10, 20);
         String label = RandomText.word();
-        CenterObject center = new CenterObject("Center", new double[] {RandomInteger.nextInteger(1, 5), RandomInteger.nextInteger(1, 5)});
+        CenterObjectV1 center = new CenterObjectV1("Center", new double[] {RandomInteger.nextInteger(1, 5), RandomInteger.nextInteger(1, 5)});
         double radius = RandomDouble.nextDouble(100.0);
 		
 		return new BeaconV1(id, siteId, type, udi, label, center, radius);

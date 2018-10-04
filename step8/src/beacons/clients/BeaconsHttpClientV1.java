@@ -1,7 +1,5 @@
 package beacons.clients;
 
-import java.util.*;
-
 import javax.ws.rs.core.GenericType;
 
 import org.pipservices.rpc.clients.CommandableHttpClient;
@@ -37,9 +35,9 @@ public class BeaconsHttpClientV1 extends CommandableHttpClient implements IBeaco
 
 	// Todo
 	@Override
-	public CenterObject calculatePosition(String correlationId, String siteId, String[] udis)
+	public CenterObjectV1 calculatePosition(String correlationId, String siteId, String[] udis)
 			throws ApplicationException {
-		return callCommand(CenterObject.class, "calculate_position", correlationId,
+		return callCommand(CenterObjectV1.class, "calculate_position", correlationId,
 				Parameters.fromTuples("site_id", siteId, "udis", udis));
 	}
 

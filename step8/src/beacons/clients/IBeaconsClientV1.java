@@ -12,5 +12,5 @@ public interface IBeaconsClientV1 {
     BeaconV1 createBeacon(String correlationId, BeaconV1 item) throws ApplicationException;
     BeaconV1 updateBeacon(String correlationId, BeaconV1 item) throws ApplicationException;
     BeaconV1 deleteBeaconById(String correlationId, String id) throws ApplicationException;
-    CenterObject calculatePosition(String correlationId, String siteId, String[] udis) throws ApplicationException;
+    CenterObjectV1 calculatePosition(String correlationId, String siteId, String[] udis) throws ApplicationException;
 }

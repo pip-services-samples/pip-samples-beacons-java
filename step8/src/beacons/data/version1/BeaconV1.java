@@ -10,12 +10,12 @@ public class BeaconV1 implements IStringIdentifiable {
 	private String _type;
 	private String _udi;
 	private String _label;
-	private CenterObject _center;
+	private CenterObjectV1 _center;
 	private double _radius;
 	
 	public BeaconV1() {}
 	
-	public BeaconV1(String id, String siteId, String type, String udi, String label, CenterObject center, double radius) {
+	public BeaconV1(String id, String siteId, String type, String udi, String label, CenterObjectV1 center, double radius) {
 		this._id = id;
 		this._siteId = siteId;
 		this._type = type;
@@ -46,8 +46,8 @@ public class BeaconV1 implements IStringIdentifiable {
 	public void setLabel(String value) { _label = value; }
 
 	@JsonProperty("center")
-	public CenterObject getCenter() { return _center; }
-	public void setCenter(CenterObject value) { _center = value; }
+	public CenterObjectV1 getCenter() { return _center; }
+	public void setCenter(CenterObjectV1 value) { _center = value; }
 
 	@JsonProperty("radius")
 	public double getRadius() { return _radius; }

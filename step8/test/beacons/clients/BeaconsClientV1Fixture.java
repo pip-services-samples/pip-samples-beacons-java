@@ -11,16 +11,16 @@ import org.pipservices.commons.run.Parameters;
 import beacons.clients.IBeaconsClientV1;
 import beacons.data.version1.BeaconTypeV1;
 import beacons.data.version1.BeaconV1;
-import beacons.data.version1.CenterObject;
+import beacons.data.version1.CenterObjectV1;
 import beacons.data.version1.TestModel;
 
 public class BeaconsClientV1Fixture {
 
 	private BeaconV1 BEACON1 = new BeaconV1("1", "1", BeaconTypeV1.AltBeacon, "00001", "TestBeacon1",
-			new CenterObject("Point", new double[] { 0, 0 }), 50);
+			new CenterObjectV1("Point", new double[] { 0, 0 }), 50);
 
 	private BeaconV1 BEACON2 = new BeaconV1("2", "1", BeaconTypeV1.iBeacon, "00002", "TestBeacon2",
-			new CenterObject("Point", new double[] { 2, 2 }), 70);
+			new CenterObjectV1("Point", new double[] { 2, 2 }), 70);
 
 	private IBeaconsClientV1 _client;
 
@@ -102,7 +102,7 @@ public class BeaconsClientV1Fixture {
 		assertNotNull(beacon2.getCenter());
 
 		// Calculate position for one beacon
-		CenterObject position = _client.calculatePosition(null, "1", new String[] { "00001" });
+		CenterObjectV1 position = _client.calculatePosition(null, "1", new String[] { "00001" });
 		assertNull(position);
 		assertEquals("Point", position.getType());
 		assertEquals(2, position.getCoordinates().length);

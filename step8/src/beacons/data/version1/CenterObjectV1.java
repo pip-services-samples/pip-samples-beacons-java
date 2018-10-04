@@ -2,13 +2,13 @@ package beacons.data.version1;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class CenterObject {
+public class CenterObjectV1 {
 	private String _type;
 	private double[] _coordinates;
 	
-	public CenterObject() {}
+	public CenterObjectV1() {}
 
-	public CenterObject(String type, double[] coordinates) {
+	public CenterObjectV1(String type, double[] coordinates) {
 		_type = type;
 		_coordinates = coordinates;
 	}

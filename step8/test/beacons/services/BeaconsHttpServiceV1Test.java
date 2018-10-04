@@ -20,7 +20,7 @@ import org.pipservices.commons.run.Parameters;
 
 import beacons.data.version1.BeaconTypeV1;
 import beacons.data.version1.BeaconV1;
-import beacons.data.version1.CenterObject;
+import beacons.data.version1.CenterObjectV1;
 import beacons.logic.BeaconsController;
 import beacons.persistence.BeaconsMemoryPersistence;
 import beacons.services.BeaconsHttpServiceV1;
@@ -29,10 +29,10 @@ import beacons.data.version1.TestModel;
 public class BeaconsHttpServiceV1Test {
 
 	private BeaconV1 BEACON1 = new BeaconV1("1", "1", BeaconTypeV1.AltBeacon, "00001", "TestBeacon1",
-			new CenterObject("Point", new double[] { 0, 0 }), 50);
+			new CenterObjectV1("Point", new double[] { 0, 0 }), 50);
 
 	private BeaconV1 BEACON2 = new BeaconV1("2", "1", BeaconTypeV1.iBeacon, "00002", "TestBeacon2",
-			new CenterObject("Point", new double[] { 2, 2 }), 70);
+			new CenterObjectV1("Point", new double[] { 2, 2 }), 70);
 	
 	private static final ConfigParams HttpConfig = ConfigParams.fromTuples("connection.protocol", "http",
 			"connection.host", "localhost", "connection.port", 3000);
@@ -43,7 +43,7 @@ public class BeaconsHttpServiceV1Test {
 
 	@Before
 	public void setUp() throws Exception {
-		_persistence = new BeaconsMemoryPersistence(BeaconV1.class);
+		_persistence = new BeaconsMemoryPersistence();
 		_persistence.configure(new ConfigParams());
 
 		_controller = new BeaconsController();
@@ -117,7 +117,7 @@ public class BeaconsHttpServiceV1Test {
 		assertEquals(beacon1.getId(), beacon.getId());
 		
 		// Calculate position for one beacon
-		CenterObject position = invoke(CenterObject.class, "/v1/beacons/calculate_position", 
+		CenterObjectV1 position = invoke(CenterObjectV1.class, "/v1/beacons/calculate_position", 
 				Parameters.fromTuples("site_id", "1", "udis", "00001"));
 		assertNull(position);
 		assertEquals("Point", position.getType());

@@ -6,10 +6,10 @@ import org.bson.BsonDocument;
 import org.bson.BsonInt32;
 import org.bson.conversions.Bson;
 import org.pipservices.commons.data.*;
-import org.pipservices.commons.errors.ApplicationException;
+import org.pipservices.commons.errors.*;
 import org.pipservices.mongodb.persistence.*;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.model.Filters;
+import com.mongodb.client.*;
+import com.mongodb.client.model.*;
 
 import beacons.data.version1.*;
 
