@@ -12,101 +12,118 @@ import org.pipservices.commons.data.*;
 import org.pipservices.commons.errors.ApplicationException;
 import org.pipservices.commons.refer.*;
 
+import beacons.data.version1.BeaconTypeV1;
 import beacons.data.version1.BeaconV1;
+import beacons.data.version1.CenterObject;
 import beacons.logic.BeaconsController;
 import beacons.persistence.BeaconsMemoryPersistence;
 import beacons.data.version1.TestModel;
 
-
 public class BeaconsControllerTest {
+
+	private BeaconV1 BEACON1 = new BeaconV1("1", "1", BeaconTypeV1.AltBeacon, "00001", "TestBeacon1",
+			new CenterObject("Point", new double[] { 0, 0 }), 50);
+
+	private BeaconV1 BEACON2 = new BeaconV1("2", "1", BeaconTypeV1.iBeacon, "00002", "TestBeacon2",
+			new CenterObject("Point", new double[] { 2, 2 }), 70);
 
 	private BeaconsController _controller;
 
-    private BeaconsMemoryPersistence _persistence;
-    
-    public BeaconsControllerTest() throws ApplicationException {
-    	IReferences references = new References();
-        _controller = new BeaconsController();
+	private BeaconsMemoryPersistence _persistence;
 
-        _persistence = new BeaconsMemoryPersistence(null);
-        _persistence.configure(new ConfigParams());
+	public BeaconsControllerTest() throws ApplicationException {
+		IReferences references = new References();
+		_controller = new BeaconsController();
 
-        references.put(new Descriptor("pip-beacons", "persistence", "memory", "*", "1.0"), _persistence);
-        references.put(new Descriptor("pip-beacons", "controller", "default", "*", "1.0"), _controller);
+		_persistence = new BeaconsMemoryPersistence(BeaconV1.class);
+		_persistence.configure(new ConfigParams());
 
-        _controller.setReferences(references);
-    }
-    
-    @Test
-    public void itShouldCreateBeacon() {
+		references.put(new Descriptor("beacons", "persistence", "memory", "*", "1.0"), _persistence);
+		references.put(new Descriptor("beacons", "controller", "default", "*", "1.0"), _controller);
 
-        BeaconV1 beacon = TestModel.createBeacon();
+		_controller.setReferences(references);
+		_persistence.open(null);
+	}
 
-        BeaconV1 result = _controller.createBeacon(null, beacon);
+	@Test
+	public void testClientCrudOperations() throws ApplicationException {
+		// Create the first beacon
+		BeaconV1 beacon1 = _controller.createBeacon(null, BEACON1);
 
-        TestModel.assertEqual(beacon, result);
+		assertNotNull(beacon1);
+		assertNotNull(beacon1.getId());
+		assertEquals(BEACON1.getUdi(), beacon1.getUdi());
+		assertEquals(BEACON1.getSiteId(), beacon1.getSiteId());
+		assertEquals(BEACON1.getType(), beacon1.getType());
+		assertEquals(BEACON1.getLabel(), beacon1.getLabel());
+		assertNotNull(beacon1.getCenter());
 
-    }
+		// Create the second beacon
+		BeaconV1 beacon2 = _controller.createBeacon(null, BEACON2);
 
-    @Test
-    public void itShouldUpdateBeacon() {
-    	BeaconV1 beacon = _controller.createBeacon(null, TestModel.createBeacon());
+		assertNotNull(beacon2);
+		assertNotNull(beacon2.getId());
+		assertEquals(BEACON2.getUdi(), beacon2.getUdi());
+		assertEquals(BEACON2.getSiteId(), beacon2.getSiteId());
+		assertEquals(BEACON2.getType(), beacon2.getType());
+		assertEquals(BEACON2.getLabel(), beacon2.getLabel());
+		assertNotNull(beacon2.getCenter());
 
-        beacon.setLabel("Update Label");
-        beacon.setType("Update Type");
+		// Get all beacons
+		DataPage<BeaconV1> page = _controller.getBeaconsByFilter(null, new FilterParams(), new PagingParams());
+		assertNotNull(page);
+		assertEquals(2, page.getData().size());
+		beacon1 = page.getData().get(0);
 
-        BeaconV1 result = _controller.updateBeacon(null, beacon);
+		// Update the beacon
+		beacon1.setLabel("Updated Label 1");
+		BeaconV1 beacon = _controller.updateBeacon(null, beacon1);
+		assertNotNull(beacon);
+		assertEquals(beacon1.getId(), beacon.getId());
+		assertEquals("Updated Label 1", beacon.getLabel());
 
-        TestModel.assertEqual(beacon, result);
+		// Get beacon by udi
+		beacon = _controller.getBeaconsByUdi(null, beacon1.getUdi());
+		assertNotNull(beacon);
+		assertEquals(beacon1.getId(), beacon.getId());
 
-    }
+		// Delete the beacon
+		_controller.deleteBeaconById(null, beacon1.getId());
 
-    @Test
-    public void itShouldDeleteBeacon() {
-    	BeaconV1 beacon = _controller.createBeacon(null, TestModel.createBeacon());
+		// Try to get deleted beacon
+		beacon = _controller.getBeaconsById(null, beacon1.getId());
+		assertNull(beacon);
+	}
 
-    	BeaconV1 deletedBeacon = _controller.deleteBeaconById(null, beacon.getId());
-    	BeaconV1 result = _controller.getBeaconsById(null, beacon.getId());
+	@Test
+	public void testCalculatePosition() throws ApplicationException {
+		// Create the first beacon
+		BeaconV1 beacon1 = _controller.createBeacon(null, BEACON1);
 
-        TestModel.assertEqual(beacon, deletedBeacon);
-        assertNull(result);
-    }
+		assertNotNull(beacon1);
+		assertNotNull(beacon1.getId());
+		assertEquals(BEACON1.getUdi(), beacon1.getUdi());
+		assertEquals(BEACON1.getSiteId(), beacon1.getSiteId());
+		assertEquals(BEACON1.getType(), beacon1.getType());
+		assertEquals(BEACON1.getLabel(), beacon1.getLabel());
+		assertNotNull(beacon1.getCenter());
 
-    @Test
-    public void itShouldGetBeaconById() {
-    	BeaconV1 beacon = _controller.createBeacon(null, TestModel.createBeacon());
+		// Create the second beacon
+		BeaconV1 beacon2 = _controller.createBeacon(null, BEACON2);
 
-    	BeaconV1 result = _controller.getBeaconsById(null, beacon.getId());
+		assertNotNull(beacon2);
+		assertNotNull(beacon2.getId());
+		assertEquals(BEACON2.getUdi(), beacon2.getUdi());
+		assertEquals(BEACON2.getSiteId(), beacon2.getSiteId());
+		assertEquals(BEACON2.getType(), beacon2.getType());
+		assertEquals(BEACON2.getLabel(), beacon2.getLabel());
+		assertNotNull(beacon2.getCenter());
 
-        TestModel.assertEqual(beacon, result);
+		// Calculate position for one beacon
+		CenterObject position = _controller.calculatePosition(null, "1", new String[] { "00001" });
+		assertNotNull(position);
+		assertEquals("Point", position.getType());
+		assertEquals(2, position.getCoordinates().length);
+	}
 
-    }
-
-    @Test
-    public void itShouldGetBeaconByUdi() {
-    	BeaconV1 beacon = _controller.createBeacon(null, TestModel.createBeacon());
-
-    	BeaconV1 result = _controller.getBeaconsById(null, beacon.getUdi());
-
-        TestModel.assertEqual(beacon, result);
-
-    }
-
-    @Test
-    public void itShouldGetBeaconsByFilter() {
-    	List<BeaconV1> data = new ArrayList<BeaconV1>();
-    	for(int i = 0; i < 3; i++) {
-    		data.add(i, TestModel.createBeacon());
-    	}
-    	DataPage<BeaconV1> beacons = new DataPage<BeaconV1>();
-    	beacons.setData(data);
-    	beacons.setTotal((long) data.size());
-    	FilterParams filter = new FilterParams();
-    	PagingParams paging = new PagingParams();
-
-        
-    	DataPage<BeaconV1> result = _controller.getBeaconsByFilter(null, filter, paging);
-    	assertNotNull(result);
-    	assertEquals(beacons.getTotal(), result.getTotal());
-    }
 }

@@ -180,16 +180,21 @@
         <artifactId>pip-services-data</artifactId>
         <version>3.0.0-SNAPSHOT</version>
     </dependency>
-    <!-- <dependency>
+    <dependency>
         <groupId>org.pipservices</groupId>
-        <artifactId>pip-services-rpc</artifactId>
+        <artifactId>pip-services-rpc-java</artifactId>
         <version>3.0.0-SNAPSHOT</version>
-    </dependency> -->
+    </dependency>
     <dependency>
         <groupId>org.pipservices</groupId>
         <artifactId>pip-services-mongodb</artifactId>
         <version>3.0.0-SNAPSHOT</version>
     </dependency>
+    <dependency>
+    	<groupId>org.glassfish.jersey.core</groupId>
+    	<artifactId>jersey-common</artifactId>
+    	<version>2.27</version>
+	</dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

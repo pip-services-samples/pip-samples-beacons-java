@@ -1,112 +1,159 @@
-//package beacons.services;
-//
-//import static org.junit.Assert.*;
-//import java.io.IOException;
-//import java.util.*;
-//
-//import javax.ws.rs.client.Client;
-//import javax.ws.rs.client.ClientBuilder;
-//import javax.ws.rs.client.Entity;
-//import javax.ws.rs.core.MediaType;
-//import javax.ws.rs.core.Response;
-//
-//import org.glassfish.jersey.client.ClientConfig;
-//import org.glassfish.jersey.client.ClientRequest;
-//import org.junit.Test;
-//import org.pipservices.commons.config.*;
-//import org.pipservices.commons.convert.JsonConverter;
-//import org.pipservices.commons.data.DataPage;
-//import org.pipservices.commons.errors.ApplicationException;
-//import org.pipservices.commons.refer.*;
-//
-//import com.fasterxml.jackson.core.JsonParseException;
-//import com.fasterxml.jackson.databind.JsonMappingException;
-//import com.sun.jersey.api.json.JSONConfiguration;
-//
-//import beacons.data.version1.BeaconV1;
-//import beacons.logic.BeaconsController;
-//import beacons.persistence.BeaconsMemoryPersistence;
-//import beacons.services.BeaconsHttpServiceV1;
-//import beacons.data.version1.TestModel;
-//
-//public class BeaconsHttpServiceV1Test {
-//
-//	private static final ConfigParams HttpConfig = ConfigParams.fromTuples("connection.protocol", "http",
-//			"connection.host", "localhost", "connection.port", "8080");
-//
-//	private BeaconsMemoryPersistence _persistence;
-//	private BeaconsController _controller;
-//	private BeaconsHttpServiceV1 _service;
-//	
-//    public BeaconsHttpServiceV1Test() throws ApplicationException {
-//        _persistence = new BeaconsMemoryPersistence(null);
-//        _controller = new BeaconsController();
-//        _service = new BeaconsHttpServiceV1();
-//
-//        IReferences references = References.fromTuples(
-//            new Descriptor("pip-beacons", "persistence", "memory", "default", "1.0"), _persistence,
-//            new Descriptor("pip-beacons", "controller", "default", "default", "1.0"), _controller,
-//            new Descriptor("pip-beacons", "service", "http", "default", "1.0"), _service
-//        );
-//
-//        _controller.setReferences(references);
-//
-//        _service.configure(HttpConfig);
-//        _service.setReferences(references);
-//        _service.open(null);
-//    }
-//    
-//    @Test
-//    public void itShouldTestCrudOperations() throws JsonMappingException, JsonParseException, IOException {
-//        BeaconV1 expectedBeacon1 = TestModel.createBeacon();
-//        BeaconV1 beacon1 = invoke("create_beacon", new BeaconV1(expectedBeacon1));
-//        TestModel.assertEqual(expectedBeacon1, beacon1);
-//
-//        BeaconV1 expectedBeacon2 = TestModel.createBeacon();
-//        BeaconV1 beacon2 = invoke("create_beacon", new BeaconV1(expectedBeacon2));
-//        TestModel.assertEqual(expectedBeacon2, beacon2);
-//
-//        DataPage<BeaconV1> expectedPage = new DataPage<BeaconV1>();
-//        List<BeaconV1> data = new ArrayList<BeaconV1>();
-//        data.add(TestModel.createBeacon());
-//        data.add(TestModel.createBeacon());
-//        expectedPage.setData(data);
-//        expectedPage.setTotal((long) data.size());
-//        DataPage<BeaconV1> page = invoke("get_beacons", expectedPage);
-//        assertNotNull(page);
-//        assertEquals(2, page.getData().size());
-//
-//        beacon1.setRadius(25.0);
-//        beacon2.setRadius(50.0);
-//
-//        BeaconV1 beacon = invoke("update_beacon", beacon1);
-//        TestModel.assertEqual(beacon1, beacon);
-//
-//        // TO DO 
-//        beacon = invoke("delete_beacon", beacon1.getId() == beacon.getId() ? beacon1 : null);
-//        assertNotNull(beacon);
-//        assertEquals(beacon1.getId(), beacon.getId());
-//
-//        beacon = invoke("get_beacon", beacon1.getId() == beacon.getId() ? beacon1 : null);
-//        assertNull(beacon);
-//
-//        beacon = invoke("delete_beacon", beacon2.getId() == beacon.getId() ? beacon1 : null);
-//        assertNotNull(beacon);
-//        assertEquals(beacon2.getId(), beacon.getId());
-//
-//    }
-//
-//    private <T> T invoke(String route, T entity) throws JsonMappingException, JsonParseException, IOException {
-//    	ClientConfig clientConfig = new ClientConfig();
-//        clientConfig.getProperties().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
-//        Client _client = ClientBuilder.newClient(clientConfig); 
-//        ClientRequest request = new ClientRequest(null);
-//        request.setEntity(entity);
-//        
-//        //String requestValue = JsonConverter.toJson(request);
-//        Response response = _client.target(request.getUri()).request(request.getMediaType())
-//                .post( Entity.entity("http://localhost:27017/v1/beacons/" + route, MediaType.APPLICATION_JSON));
-//        String responseValue = response.getEntity().toString();
-//        return JsonConverter.fromJson(null, responseValue);
-//    }
-//}
+package beacons.services;
+
+import static org.junit.Assert.*;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.jackson.JacksonFeature;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.pipservices.commons.config.*;
+import org.pipservices.commons.data.DataPage;
+import org.pipservices.commons.refer.*;
+import org.pipservices.commons.run.Parameters;
+
+import beacons.data.version1.BeaconTypeV1;
+import beacons.data.version1.BeaconV1;
+import beacons.data.version1.CenterObject;
+import beacons.logic.BeaconsController;
+import beacons.persistence.BeaconsMemoryPersistence;
+import beacons.services.BeaconsHttpServiceV1;
+import beacons.data.version1.TestModel;
+
+public class BeaconsHttpServiceV1Test {
+
+	private BeaconV1 BEACON1 = new BeaconV1("1", "1", BeaconTypeV1.AltBeacon, "00001", "TestBeacon1",
+			new CenterObject("Point", new double[] { 0, 0 }), 50);
+
+	private BeaconV1 BEACON2 = new BeaconV1("2", "1", BeaconTypeV1.iBeacon, "00002", "TestBeacon2",
+			new CenterObject("Point", new double[] { 2, 2 }), 70);
+	
+	private static final ConfigParams HttpConfig = ConfigParams.fromTuples("connection.protocol", "http",
+			"connection.host", "localhost", "connection.port", 3000);
+
+	private BeaconsMemoryPersistence _persistence;
+	private BeaconsController _controller;
+	private BeaconsHttpServiceV1 _service;
+
+	@Before
+	public void setUp() throws Exception {
+		_persistence = new BeaconsMemoryPersistence(BeaconV1.class);
+		_persistence.configure(new ConfigParams());
+
+		_controller = new BeaconsController();
+		_controller.configure(new ConfigParams());
+
+		_service = new BeaconsHttpServiceV1();
+		_service.configure(HttpConfig);
+
+		References references = References.fromTuples(
+				new Descriptor("beacons", "persistence", "memory", "default", "1.0"), _persistence,
+				new Descriptor("beacons", "controller", "default", "default", "1.0"), _controller,
+				new Descriptor("beacons", "service", "http", "default", "1.0"), _service);
+
+		_controller.setReferences(references);
+		_service.setReferences(references);
+
+		_persistence.open(null);
+		_service.open(null);
+	}
+
+	@After
+	public void close() throws Exception {
+		_service.close(null);
+	}
+
+	@Test
+	public void testCrudOperations() throws Exception {
+		// Create the first beacon
+		BeaconV1 beacon1 = invoke(BeaconV1.class, "/v1/beacons/create_beacon",
+				Parameters.fromTuples("beacon", BEACON1));
+
+		assertNotNull(beacon1);
+		assertNotNull(beacon1.getId());
+		assertEquals(BEACON1.getUdi(), beacon1.getUdi());
+		assertEquals(BEACON1.getSiteId(), beacon1.getSiteId());
+		assertEquals(BEACON1.getType(), beacon1.getType());
+		assertEquals(BEACON1.getLabel(), beacon1.getLabel());
+		assertNotNull(beacon1.getCenter());
+
+		// Create the second beacon
+		BeaconV1 beacon2 = invoke(BeaconV1.class, "/v1/beacons/create_beacon",
+				Parameters.fromTuples("beacon", BEACON2));
+
+		assertNotNull(beacon2);
+		assertNotNull(beacon2.getId());
+		assertEquals(BEACON2.getUdi(), beacon2.getUdi());
+		assertEquals(BEACON2.getSiteId(), beacon2.getSiteId());
+		assertEquals(BEACON2.getType(), beacon2.getType());
+		assertEquals(BEACON2.getLabel(), beacon2.getLabel());
+		assertNotNull(beacon2.getCenter());
+
+		// Get all beacons
+		DataPage<BeaconV1> beacons = invoke(new GenericType<DataPage<BeaconV1>>() {
+		}, "/v1/beacons/get_beacons", null);
+		assertNotNull(beacons);
+		assertEquals(2, beacons.getData().size());
+		beacon1 = beacons.getData().get(0);
+
+		// Update the beacon
+		beacon1.setLabel("Updated Label 1");
+		BeaconV1 beacon = invoke(BeaconV1.class, "/v1/beacons/update_beacon", Parameters.fromTuples("beacon", beacon1));
+
+		assertNotNull(beacon);
+		assertEquals(beacon1.getId(), beacon.getId());
+		assertEquals("Updated Label 1", beacon.getLabel());
+		
+		// Get beacon by udi
+		beacon = invoke(BeaconV1.class, "/v1/beacons/get_beacon_by_udi",
+				Parameters.fromTuples("udi", beacon1.getUdi()));
+		assertNotNull(beacon);
+		assertEquals(beacon1.getId(), beacon.getId());
+		
+		// Calculate position for one beacon
+		CenterObject position = invoke(CenterObject.class, "/v1/beacons/calculate_position", 
+				Parameters.fromTuples("site_id", "1", "udis", "00001"));
+		assertNull(position);
+		assertEquals("Point", position.getType());
+		assertEquals(2, position.getCoordinates().length);
+//		assertEquals(0, position.getCoordinates()[0]);
+//		assertEquals(0, position.getCoordinates()[1]);
+		
+
+		// Delete the beacon
+		invoke(BeaconV1.class, "/v1/beacons/delete_beacon_by_id", Parameters.fromTuples("id", beacon1.getId()));
+
+		// Try to get deleted beacon
+		beacon = invoke(BeaconV1.class, "/v1/beacons/get_beacon_by_id",
+				Parameters.fromTuples("id", beacon1.getId()));
+		assertNull(beacon);
+	}
+
+	private static Response performInvoke(String route, Object entity) throws Exception {
+		ClientConfig clientConfig = new ClientConfig();
+		clientConfig.register(new JacksonFeature());
+		Client httpClient = ClientBuilder.newClient(clientConfig);
+
+		Response response = httpClient.target("http://localhost:3000" + route).request(MediaType.APPLICATION_JSON)
+				.post(Entity.entity(entity, MediaType.APPLICATION_JSON));
+
+		return response;
+	}
+
+	private static <T> T invoke(Class<T> type, String route, Object entity) throws Exception {
+		Response response = performInvoke(route, entity);
+		return response.readEntity(type);
+	}
+
+	private static <T> T invoke(GenericType<T> type, String route, Object entity) throws Exception {
+		Response response = performInvoke(route, entity);
+		return response.readEntity(type);
+	}
+
+}

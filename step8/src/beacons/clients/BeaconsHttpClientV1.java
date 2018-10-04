@@ -1,90 +1,61 @@
-//package beacons.clients;
-//
-//import java.io.IOException;
-//import java.util.*;
-//
-//import org.pipservices.clients.CommandableHttpClient;
-//import org.pipservices.commons.data.*;
-//import org.pipservices.commons.errors.ApplicationException;
-//
-//import beacons.data.version1.*;
-//
-//public class BeaconsHttpClientV1 extends CommandableHttpClient implements IBeaconsClientV1{
-//
-//	public BeaconsHttpClientV1() {
-//		super("v1/beacons");
-//	}
-//
-//	@Override
-//	public DataPage<BeaconV1> getPageByFilter(String correlationId, FilterParams filter, PagingParams paging) {
-//		try {
-//			return callCommand("get_beacons", correlationId, filter, paging);
-//		} catch (ApplicationException | IOException e) {
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
-//
-//	@Override
-//	public BeaconV1 getOneById(String correlationId, String id) {
-//		try {
-//			return callCommand("get_beacon", correlationId, id);
-//		} catch (ApplicationException | IOException e) {
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
-//
-//	@Override
-//	public BeaconV1 getOneByUdi(String correlationId, String udi) {
-//		try {
-//			return callCommand("get_beacon_by_udi", correlationId, udi);
-//		} catch (ApplicationException | IOException e) {
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
-//
-//	@Override
-//	public CenterObject calculatePosition(String correlationId, String siteId, String[] udis) {
-//		Map<String, String[]> entity = new HashMap<String, String[]>();
-//		entity.put(siteId, udis);
-//		try {
-//			return callCommand("calculate_position", correlationId, entity);
-//		} catch (ApplicationException | IOException e) {
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
-//
-//	@Override
-//	public BeaconV1 create(String correlationId, BeaconV1 item) {
-//		try {
-//			return callCommand("create_beacon", correlationId, item);
-//		} catch (ApplicationException | IOException e) {
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
-//
-//	@Override
-//	public BeaconV1 update(String correlationId, BeaconV1 item) {
-//		try {
-//			return callCommand("update_beacon", correlationId, item);
-//		} catch (ApplicationException | IOException e) {
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
-//
-//	@Override
-//	public BeaconV1 deleteById(String correlationId, String id) {
-//		try {
-//			return callCommand("delete_beacon", correlationId, id);
-//		} catch (ApplicationException | IOException e) {
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
-//
-//}
+package beacons.clients;
+
+import java.util.*;
+
+import javax.ws.rs.core.GenericType;
+
+import org.pipservices.rpc.clients.CommandableHttpClient;
+import org.pipservices.commons.data.*;
+import org.pipservices.commons.errors.ApplicationException;
+import org.pipservices.commons.run.Parameters;
+
+import beacons.data.version1.*;
+
+public class BeaconsHttpClientV1 extends CommandableHttpClient implements IBeaconsClientV1 {
+
+	public BeaconsHttpClientV1() {
+		super("v1/beacons");
+	}
+
+	@Override
+	public DataPage<BeaconV1> getBeaconsByFilter(String correlationId, FilterParams filter, PagingParams paging)
+			throws ApplicationException {
+		return callCommand(new GenericType<DataPage<BeaconV1>>() {
+		}, "get_beacons", correlationId, Parameters.fromTuples("filter", filter, "paging", paging));
+	}
+
+	@Override
+	public BeaconV1 getBeaconById(String correlationId, String id) throws ApplicationException {
+		return callCommand(BeaconV1.class, "get_beacon_by_id", correlationId, Parameters.fromTuples("id", id));
+	}
+
+	@Override
+	public BeaconV1 getBeaconByUdi(String correlationId, String udi) throws ApplicationException {
+		return callCommand(BeaconV1.class, "get_beacon_by_udi", correlationId,
+				Parameters.fromTuples("udi", udi));
+	}
+
+	// Todo
+	@Override
+	public CenterObject calculatePosition(String correlationId, String siteId, String[] udis)
+			throws ApplicationException {
+		return callCommand(CenterObject.class, "calculate_position", correlationId,
+				Parameters.fromTuples("site_id", siteId, "udis", udis));
+	}
+
+	@Override
+	public BeaconV1 createBeacon(String correlationId, BeaconV1 item) throws ApplicationException {
+		return callCommand(BeaconV1.class, "create_beacon", correlationId, Parameters.fromTuples("beacon", item));
+	}
+
+	@Override
+	public BeaconV1 updateBeacon(String correlationId, BeaconV1 item) throws ApplicationException {
+		return callCommand(BeaconV1.class, "update_beacon", correlationId, Parameters.fromTuples("beacon", item));
+	}
+
+	@Override
+	public BeaconV1 deleteBeaconById(String correlationId, String id) throws ApplicationException {
+		return callCommand(BeaconV1.class, "delete_beacon_by_id", correlationId, Parameters.fromTuples("id", id));
+	}
+
+}

@@ -5,61 +5,50 @@ import org.junit.Before;
 import org.junit.Test;
 import org.pipservices.commons.config.ConfigParams;
 import org.pipservices.commons.errors.ApplicationException;
-import org.pipservices.commons.refer.*;
-import beacons.clients.BeaconsHttpClientV1;
+import org.pipservices.commons.refer.Descriptor;
+import org.pipservices.commons.refer.IReferences;
+import org.pipservices.commons.refer.ReferenceException;
+import org.pipservices.commons.refer.References;
+
 import beacons.data.version1.BeaconV1;
 import beacons.logic.BeaconsController;
 import beacons.persistence.BeaconsMemoryPersistence;
-import beacons.services.BeaconsHttpServiceV1;
 
-public class BeaconsHttpClientV1Test {
-
-	private static final ConfigParams HttpConfig = ConfigParams.fromTuples("connection.protocol", "http",
-			"connection.host", "localhost", "connection.port", 8080);
+public class BeaconsDirectClientV1Test {
 
 	private BeaconsMemoryPersistence _persistence;
 	private BeaconsController _controller;
-	private BeaconsHttpClientV1 _client;
-	private BeaconsHttpServiceV1 _service;
+	private BeaconsDirectClientV1 _client;
 	private BeaconsClientV1Fixture _fixture;
-
+	
 	@Before
 	public void setUp() throws Exception {
 		_persistence = new BeaconsMemoryPersistence(BeaconV1.class);
+		_persistence.configure(new ConfigParams());
+		
 		_controller = new BeaconsController();
-		_client = new BeaconsHttpClientV1();
-		_service = new BeaconsHttpServiceV1();
-
+		_controller.configure(new ConfigParams());
+		_client = new BeaconsDirectClientV1();
+		
 		IReferences references = References.fromTuples(
 				new Descriptor("beacons", "persistence", "memory", "default", "1.0"), _persistence,
 				new Descriptor("beacons", "controller", "default", "default", "1.0"), _controller,
-				new Descriptor("beacons", "client", "http", "default", "1.0"), _client,
-				new Descriptor("beacons", "service", "http", "default", "1.0"), _service);
-
+				new Descriptor("beacons", "client", "http", "default", "1.0"), _client);
+		
 		_controller.setReferences(references);
-
-		_service.configure(HttpConfig);
-		_service.setReferences(references);
-
-		_client.configure(HttpConfig);
 		_client.setReferences(references);
-
+		
 		_fixture = new BeaconsClientV1Fixture(_client);
+		
 		_persistence.open(null);
-		
-		_service.open(null);
-		_client.open(null);
-		
-		
 	}
-
+	
+	
 	@After
 	public void tearDown() throws Exception {
-		_client.close(null);
-		_service.close(null);
 		_persistence.close(null);
 	}
-
+	
 	@Test
 	public void testHttpClientCrudOperations() throws ApplicationException {
 		_fixture.testClientCrudOperations();

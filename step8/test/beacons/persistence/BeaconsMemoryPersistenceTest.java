@@ -1,7 +1,11 @@
 package beacons.persistence;
 
 import org.junit.Test;
+import org.pipservices.commons.config.ConfigParams;
+import org.pipservices.commons.errors.ApplicationException;
+import org.pipservices.commons.errors.ConfigException;
 
+import beacons.data.version1.BeaconV1;
 import beacons.persistence.BeaconsMemoryPersistence;
 
 public class BeaconsMemoryPersistenceTest {
@@ -14,38 +18,20 @@ public class BeaconsMemoryPersistenceTest {
 	public BeaconsPersistenceFixture getFixture() { return fixture; }
 	public void setFixture(BeaconsPersistenceFixture fixture) { this.fixture = fixture; }
     
-    public BeaconsMemoryPersistenceTest() {
-        persistence = new BeaconsMemoryPersistence(null);
+    public BeaconsMemoryPersistenceTest() throws ApplicationException {
+        persistence = new BeaconsMemoryPersistence(BeaconV1.class);
+        persistence.configure(new ConfigParams());
         fixture = new BeaconsPersistenceFixture(persistence);
+        persistence.open(null);
     }
     
     @Test
-    public void itShouldCreateBeacon() {
-        fixture.testCreateBeacon();
+    public void testCrudOperations() throws ApplicationException {
+        fixture.testCrudOperations();
     }
 
     @Test
-    public void itShouldUpdateBeacon() {
-        fixture.testUpdateBeacon();
-    }
-
-    @Test
-    public void itShouldDeleteBeacon() {
-        fixture.testDeleteBeacon();
-    }
-
-    @Test
-    public void itShouldGetBeaconById() {
-        fixture.testGetBeaconById();
-    }
-
-    @Test
-    public void itShouldGetBeaconByUdi() {
-        fixture.testGetBeaconByUdi();
-    }
-
-    @Test
-    public void itShouldGetBeaconsByFilter() {
-        fixture.testGetBeaconsByFilter();
+    public void testGetWithFilter() throws ApplicationException {
+        fixture.testGetWithFilter();;
     }
 }

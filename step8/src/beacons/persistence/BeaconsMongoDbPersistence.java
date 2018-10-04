@@ -6,6 +6,7 @@ import org.bson.BsonDocument;
 import org.bson.BsonInt32;
 import org.bson.conversions.Bson;
 import org.pipservices.commons.data.*;
+import org.pipservices.commons.errors.ApplicationException;
 import org.pipservices.mongodb.persistence.*;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.model.Filters;
@@ -57,7 +58,7 @@ public class BeaconsMongoDbPersistence extends IdentifiableMongoDbPersistence<Be
 	}
 	
 	@Override
-	public DataPage<BeaconV1> getPageByFilter(String correlationId, FilterParams filter, PagingParams paging) {
+	public DataPage<BeaconV1> getPageByFilter(String correlationId, FilterParams filter, PagingParams paging) throws ApplicationException {
 		return super.getPageByFilter(correlationId, composeFilter(filter), paging, composeSort());
 	}
 
@@ -74,5 +75,22 @@ public class BeaconsMongoDbPersistence extends IdentifiableMongoDbPersistence<Be
         return item;
 	}
 
+	@Override
+	public BeaconV1 create(String correlationId, BeaconV1 item) throws ApplicationException {
+		return super.сreate(correlationId, item);
+	}
 
+	@Override
+	public BeaconV1 update(String correlationId, BeaconV1 newItem) throws ApplicationException {
+		return super.update(correlationId, newItem);
+	}
+	@Override
+	public BeaconV1 deleteById(String correlationId, String id) throws ApplicationException {
+		return super.deleteById(correlationId, id);
+	}
+
+	@Override
+	public BeaconV1 getOneById(String correlationId, String id) throws ApplicationException {
+		return super.getOneById(correlationId, id);
+	}
 }

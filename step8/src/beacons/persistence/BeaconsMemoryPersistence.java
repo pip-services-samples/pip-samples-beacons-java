@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.function.Predicate;
 
 import org.pipservices.commons.data.*;
+import org.pipservices.commons.errors.ApplicationException;
 import org.pipservices.data.persistence.*;
 
 import beacons.data.version1.BeaconV1;
@@ -46,7 +47,7 @@ public class BeaconsMemoryPersistence extends IdentifiableMemoryPersistence<Beac
         };
 	}	
 	
-    public DataPage<BeaconV1> getPageByFilter(String correlationId, FilterParams filter, PagingParams paging) {		
+    public DataPage<BeaconV1> getPageByFilter(String correlationId, FilterParams filter, PagingParams paging) throws ApplicationException {		
         return getPageByFilter(correlationId, composeFilter(filter), paging, null);
     }
 	
@@ -63,4 +64,18 @@ public class BeaconsMemoryPersistence extends IdentifiableMemoryPersistence<Beac
 		}
 	}
 
+	public BeaconV1 getOneById(String correlationId, String id) throws ApplicationException {
+		return super.getOneById(correlationId, id);
+	}
+	
+	public BeaconV1 create(String correlationId, BeaconV1 item) throws ApplicationException {
+    	return super.create(correlationId, item);
+    }
+    public BeaconV1 update(String correlationId, BeaconV1 newItem) throws ApplicationException {
+    	return super.update(correlationId, newItem);
+    }
+    public BeaconV1 deleteById(String correlationId, String id) throws ApplicationException {
+    	return super.deleteById(correlationId, id);
+    }
+	
 }

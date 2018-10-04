@@ -19,12 +19,12 @@ public class BeaconsNullClientV1 implements IBeaconsClientV1 {
 
 	@Override
 	public BeaconV1 getBeaconById(String correlationId, String id) {
-		return null;
+		return new BeaconV1();
 	}
 
 	@Override
 	public BeaconV1 getBeaconByUdi(String correlationId, String udi) {
-		return null;
+		return new BeaconV1();
 	}
 
 	@Override
@@ -40,12 +40,12 @@ public class BeaconsNullClientV1 implements IBeaconsClientV1 {
 
 	@Override
 	public BeaconV1 deleteBeaconById(String correlationId, String id) {
-		return null;
+		return new BeaconV1();
 	}
 
 	@Override
 	public CenterObject calculatePosition(String correlationId, String siteId, String[] udis) {
-		return null;
+		return new CenterObject();
 	}
 
 }

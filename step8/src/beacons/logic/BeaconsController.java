@@ -3,24 +3,31 @@ package beacons.logic;
 import java.util.List;
 
 import org.pipservices.commons.commands.*;
+import org.pipservices.commons.config.ConfigParams;
+import org.pipservices.commons.config.IConfigurable;
 import org.pipservices.commons.data.*;
+import org.pipservices.commons.errors.ApplicationException;
+import org.pipservices.commons.errors.ConfigException;
 import org.pipservices.commons.refer.*;
 
 import beacons.data.version1.*;
 import beacons.persistence.IBeaconsPersistence;
-import beacons.services.BeaconsCommandSet;
 
-public class BeaconsController implements IReferenceable, ICommandable, IBeaconsController {
+public class BeaconsController implements IReferenceable, ICommandable, IBeaconsController, IConfigurable {
 	private IBeaconsPersistence _persistence;
 	private BeaconsCommandSet _commandSet;
 
 	public BeaconsController() {
 	}
 
+	@Override
+	public void configure(ConfigParams config) throws ConfigException {
+
+	}
+
 	public void setReferences(IReferences references) throws ReferenceException {
-		_persistence = (IBeaconsPersistence) references.getOneRequired(
-			new Descriptor("beacons", "persistence", "*", "*", "1.0")
-		);
+		_persistence = (IBeaconsPersistence) references
+				.getOneRequired(new Descriptor("beacons", "persistence", "*", "*", "1.0"));
 	}
 
 	@Override
@@ -29,12 +36,13 @@ public class BeaconsController implements IReferenceable, ICommandable, IBeacons
 	}
 
 	@Override
-	public DataPage<BeaconV1> getBeaconsByFilter(String correlationId, FilterParams filter, PagingParams paging) {
+	public DataPage<BeaconV1> getBeaconsByFilter(String correlationId, FilterParams filter, PagingParams paging)
+			throws ApplicationException {
 		return _persistence.getPageByFilter(correlationId, filter, paging);
 	}
 
 	@Override
-	public BeaconV1 getBeaconsById(String correlationId, String id) {
+	public BeaconV1 getBeaconsById(String correlationId, String id) throws ApplicationException {
 		return _persistence.getOneById(correlationId, id);
 	}
 
@@ -44,26 +52,12 @@ public class BeaconsController implements IReferenceable, ICommandable, IBeacons
 	}
 
 	@Override
-	public BeaconV1 createBeacon(String correlationId, BeaconV1 item) {
-		return _persistence.create(correlationId, item);
-	}
-
-	@Override
-	public BeaconV1 updateBeacon(String correlationId, BeaconV1 item) {
-		return _persistence.update(correlationId, item);
-	}
-
-	@Override
-	public BeaconV1 deleteBeaconById(String correlationId, String id) {
-		return _persistence.deleteById(correlationId, id);
-	}
-
-	@Override
-	public CenterObject calculatePosition(String correlationId, String siteId, String[] udis) {
+	public CenterObject calculatePosition(String correlationId, String siteId, String[] udis)
+			throws ApplicationException {
 		if (udis == null || udis.length == 0)
 			return null;
 
-		DataPage<BeaconV1> result = getBeaconsByFilter(correlationId,
+		DataPage<BeaconV1> result = _persistence.getPageByFilter(correlationId,
 				FilterParams.fromTuples("site_id", siteId, "udis", udis), null);
 		List<BeaconV1> beacons = result.getData();
 
@@ -71,14 +65,12 @@ public class BeaconsController implements IReferenceable, ICommandable, IBeacons
 		double lng = 0;
 		int count = 0;
 		for (BeaconV1 beacon : beacons) {
-			if (beacon.getCenter() != null) {
+			if (beacon.getCenter() != null && beacon.getCenter().getType().equals("Point")
+					&& beacon.getCenter().getCoordinates().length > 1) {
 				double[] coordinates = beacon.getCenter().getCoordinates();
-
-				if (coordinates != null && coordinates.length == 2) {
-					lng += coordinates[0];
-					lat += coordinates[1];
-					count += 1;
-				}
+				lng += coordinates[0];
+				lat += coordinates[1];
+				count += 1;
 			}
 		}
 
@@ -88,6 +80,21 @@ public class BeaconsController implements IReferenceable, ICommandable, IBeacons
 		}
 
 		return null;
+	}
+
+	@Override
+	public BeaconV1 createBeacon(String correlationId, BeaconV1 item) throws ApplicationException {
+		return _persistence.create(correlationId, item);
+	}
+
+	@Override
+	public BeaconV1 updateBeacon(String correlationId, BeaconV1 item) throws ApplicationException {
+		return _persistence.update(correlationId, item);
+	}
+
+	@Override
+	public BeaconV1 deleteBeaconById(String correlationId, String id) throws ApplicationException {
+		return _persistence.deleteById(correlationId, id);
 	}
 
 }

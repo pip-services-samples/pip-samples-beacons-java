@@ -16,10 +16,23 @@ public class BeaconsMongoDbPersistenceTest {
 	public void setFixture(BeaconsPersistenceFixture fixture) { this.fixture = fixture; }
 	
 	public BeaconsMongoDbPersistenceTest() throws ApplicationException {
+		String mongoUri = System.getenv("MONGO_URI");
+        String mongoHost = System.getenv("MONGO_HOST") != null ? System.getenv("MONGO_HOST") : "localhost";
+        String mongoPort = System.getenv("MONGO_PORT") != null ? System.getenv("MONGO_PORT") : "27017";
+        String mongoDatabase = System.getenv("MONGO_DB") != null ? System.getenv("MONGO_DB") : "test";
+        String mongoCollection = System.getenv("MONGO_COLLECTION") != null ? System.getenv("MONGO_COLLECTION") : "beacons";
+		
+//        ConfigParams config = ConfigParams.fromTuples(
+//            "collection", "beacons",
+//            "connection.uri", "mongodb://localhost:27017/test"
+//            );
+        
         ConfigParams config = ConfigParams.fromTuples(
-            "collection", "beacons",
-            "connection.uri", "mongodb://localhost:27017/test"
-            );
+        		"collection", mongoCollection,
+                "connection.database", mongoDatabase,
+                "connection.host", mongoHost,
+                "connection.port", mongoPort,
+                "connection.uri", mongoUri);
 
         persistence = new BeaconsMongoDbPersistence();
         persistence.configure(config);
@@ -28,34 +41,14 @@ public class BeaconsMongoDbPersistenceTest {
         fixture = new BeaconsPersistenceFixture(persistence);
     }
 	
-	@Test
-    public void itShouldCreateBeacon() {
-        fixture.testCreateBeacon();
+    @Test
+    public void testCrudOperations() throws ApplicationException {
+        fixture.testCrudOperations();
     }
 
     @Test
-    public void itShouldUpdateBeacon() {
-        fixture.testUpdateBeacon();
-    }
-
-    @Test
-    public void itShouldDeleteBeacon() {
-        fixture.testDeleteBeacon();
-    }
-
-    @Test
-    public void itShouldGetBeaconById() {
-        fixture.testGetBeaconById();
-    }
-
-    @Test
-    public void itShouldGetBeaconByUdi() {
-        fixture.testGetBeaconByUdi();
-    }
-
-    @Test
-    public void itShouldGetBeaconsByFilter() {
-        fixture.testGetBeaconsByFilter();
+    public void testGetWithFilter() throws ApplicationException {
+        fixture.testGetWithFilter();;
     }
 
 }
