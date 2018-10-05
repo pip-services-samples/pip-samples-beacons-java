@@ -13,4 +13,14 @@ public class BeaconsProcess extends ProcessContainer{
 		_factories.add(new BeaconsServiceFactory());
 	}
 
+	public static void main(String[] args) {
+		try {
+			BeaconsProcess process = new BeaconsProcess();
+			process.run(args);
+		} catch (Throwable ex) {
+			System.err.println(ex.getMessage());
+			ex.printStackTrace();
+		}
+	}
+	
 }
