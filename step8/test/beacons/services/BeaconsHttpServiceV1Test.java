@@ -24,7 +24,6 @@ import beacons.data.version1.CenterObjectV1;
 import beacons.logic.BeaconsController;
 import beacons.persistence.BeaconsMemoryPersistence;
 import beacons.services.BeaconsHttpServiceV1;
-import beacons.data.version1.TestModel;
 
 public class BeaconsHttpServiceV1Test {
 
@@ -34,8 +33,11 @@ public class BeaconsHttpServiceV1Test {
 	private BeaconV1 BEACON2 = new BeaconV1("2", "1", BeaconTypeV1.iBeacon, "00002", "TestBeacon2",
 			new CenterObjectV1("Point", new double[] { 2, 2 }), 70);
 	
-	private static final ConfigParams HttpConfig = ConfigParams.fromTuples("connection.protocol", "http",
-			"connection.host", "localhost", "connection.port", 3000);
+	private static final ConfigParams HttpConfig = ConfigParams.fromTuples(
+		"connection.protocol", "http",
+		"connection.host", "localhost",
+		"connection.port", 3002
+	);
 
 	private BeaconsMemoryPersistence _persistence;
 	private BeaconsController _controller;
@@ -118,10 +120,10 @@ public class BeaconsHttpServiceV1Test {
 		
 		// Calculate position for one beacon
 		CenterObjectV1 position = invoke(CenterObjectV1.class, "/v1/beacons/calculate_position", 
-				Parameters.fromTuples("site_id", "1", "udis", "00001"));
-		assertNull(position);
+				Parameters.fromTuples("site_id", "1", "udis", new String[] { "00001" }));
+		assertNotNull(position);
 		assertEquals("Point", position.getType());
-		assertEquals(2, position.getCoordinates().length);
+		assertEquals(2, position.getCoordinates().size());
 //		assertEquals(0, position.getCoordinates()[0]);
 //		assertEquals(0, position.getCoordinates()[1]);
 		
@@ -140,8 +142,9 @@ public class BeaconsHttpServiceV1Test {
 		clientConfig.register(new JacksonFeature());
 		Client httpClient = ClientBuilder.newClient(clientConfig);
 
-		Response response = httpClient.target("http://localhost:3000" + route).request(MediaType.APPLICATION_JSON)
-				.post(Entity.entity(entity, MediaType.APPLICATION_JSON));
+		Response response = httpClient.target("http://localhost:3002" + route)
+			.request(MediaType.APPLICATION_JSON)
+			.post(Entity.entity(entity, MediaType.APPLICATION_JSON));
 
 		return response;
 	}

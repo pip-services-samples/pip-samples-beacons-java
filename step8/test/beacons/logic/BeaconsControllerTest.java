@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import java.util.*;
-
 import org.junit.Test;
 import org.pipservices.commons.config.ConfigParams;
 import org.pipservices.commons.data.*;
@@ -17,7 +15,6 @@ import beacons.data.version1.BeaconV1;
 import beacons.data.version1.CenterObjectV1;
 import beacons.logic.BeaconsController;
 import beacons.persistence.BeaconsMemoryPersistence;
-import beacons.data.version1.TestModel;
 
 public class BeaconsControllerTest {
 
@@ -123,7 +120,7 @@ public class BeaconsControllerTest {
 		CenterObjectV1 position = _controller.calculatePosition(null, "1", new String[] { "00001" });
 		assertNotNull(position);
 		assertEquals("Point", position.getType());
-		assertEquals(2, position.getCoordinates().length);
+		assertEquals(2, position.getCoordinates().size());
 	}
 
 }

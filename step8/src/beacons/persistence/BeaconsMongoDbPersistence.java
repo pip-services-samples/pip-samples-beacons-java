@@ -48,7 +48,8 @@ public class BeaconsMongoDbPersistence extends IdentifiableMongoDbPersistence<Be
 				filters.add(Filters.in("udi", tokens));
 		}
 
-		return Filters.and(filters);
+		// MongoDB doesn't like empty list of $and
+		return filters.size() > 0 ? Filters.and(filters) : null;
 	}
 
 	protected Bson composeSort() {

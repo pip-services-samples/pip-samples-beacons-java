@@ -6,13 +6,11 @@ import org.pipservices.commons.data.DataPage;
 import org.pipservices.commons.data.FilterParams;
 import org.pipservices.commons.data.PagingParams;
 import org.pipservices.commons.errors.ApplicationException;
-import org.pipservices.commons.run.Parameters;
 
 import beacons.clients.IBeaconsClientV1;
 import beacons.data.version1.BeaconTypeV1;
 import beacons.data.version1.BeaconV1;
 import beacons.data.version1.CenterObjectV1;
-import beacons.data.version1.TestModel;
 
 public class BeaconsClientV1Fixture {
 
@@ -103,8 +101,8 @@ public class BeaconsClientV1Fixture {
 
 		// Calculate position for one beacon
 		CenterObjectV1 position = _client.calculatePosition(null, "1", new String[] { "00001" });
-		assertNull(position);
+		assertNotNull(position);
 		assertEquals("Point", position.getType());
-		assertEquals(2, position.getCoordinates().length);
+		assertEquals(2, position.getCoordinates().size());
 	}
 }

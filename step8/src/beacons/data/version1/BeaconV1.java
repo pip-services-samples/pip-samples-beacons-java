@@ -1,5 +1,6 @@
 package beacons.data.version1;
 
+import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.pipservices.commons.data.IStringIdentifiable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -26,30 +27,37 @@ public class BeaconV1 implements IStringIdentifiable {
 	}
 	
 	@JsonProperty("id")
+	@BsonProperty("_id")
 	public String getId() { return _id; }
 	public void setId(String value) { _id = value; }
 	
 	@JsonProperty("site_id")
+	@BsonProperty("site_id")
 	public String getSiteId() { return _siteId; }
 	public void setSiteId(String value) { _siteId = value; }
 	
 	@JsonProperty("type")
+	@BsonProperty("type")
 	public String getType() { return _type; }
 	public void setType(String value) { _type = value; }
 
 	@JsonProperty("udi")
+	@BsonProperty("udi")
 	public String getUdi() { return _udi; }
 	public void setUdi(String value) { _udi = value; }
 
 	@JsonProperty("label")
+	@BsonProperty("label")
 	public String getLabel() { return _label; }
 	public void setLabel(String value) { _label = value; }
 
 	@JsonProperty("center")
+	@BsonProperty("center")
 	public CenterObjectV1 getCenter() { return _center; }
 	public void setCenter(CenterObjectV1 value) { _center = value; }
 
 	@JsonProperty("radius")
+	@BsonProperty("redius")
 	public double getRadius() { return _radius; }
 	public void setRadius(double value) { _radius = value; }
 }

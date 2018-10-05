@@ -53,15 +53,12 @@ public class BeaconsCommandSet extends CommandSet {
 	private ICommand makeCalculatePositionCommand() {
 		return new Command("calculate_position",
 				new ObjectSchema().withRequiredProperty("site_id", TypeCode.String)
-						.withRequiredProperty("udis", TypeCode.Array),
+						.withRequiredProperty("udis", new ArraySchema(TypeCode.String)),
 				(correlationId, parameters) -> {
-					try {
-						String siteId = parameters.getAsString("site_id");
-						String[] udis = convertToStringList(parameters.getAsObject("udis"));
-						return _controller.calculatePosition(correlationId, siteId, udis);
-					} catch (IOException e) {
-					}
-					return null;
+					String siteId = parameters.getAsString("site_id");
+					String tokens = parameters.getAsNullableString("udis");
+					String[] udis = tokens != null ? tokens.split(",") : new String[0];
+					return _controller.calculatePosition(correlationId, siteId, udis);
 				});
 	}
 
@@ -101,7 +98,4 @@ public class BeaconsCommandSet extends CommandSet {
 		return JsonConverter.fromJson(BeaconV1.class, JsonConverter.toJson(value));
 	}
 
-	private String[] convertToStringList(Object value) throws IOException {
-		return JsonConverter.fromJson(String[].class, JsonConverter.toJson(value));
-	}
 }

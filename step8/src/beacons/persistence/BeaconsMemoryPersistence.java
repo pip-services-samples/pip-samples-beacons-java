@@ -41,7 +41,7 @@ public class BeaconsMemoryPersistence extends IdentifiableMemoryPersistence<Beac
                 return false;
             if (udi != null && !udi.equals(v.getUdi()))
                 return false;
-            if (udiList != null && !udiList.contains(v.getId()))
+            if (udiList != null && !udiList.contains(v.getUdi()))
                 return false;
             return true;
         };

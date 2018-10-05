@@ -7,10 +7,8 @@ import org.pipservices.commons.config.ConfigParams;
 import org.pipservices.commons.errors.ApplicationException;
 import org.pipservices.commons.refer.Descriptor;
 import org.pipservices.commons.refer.IReferences;
-import org.pipservices.commons.refer.ReferenceException;
 import org.pipservices.commons.refer.References;
 
-import beacons.data.version1.BeaconV1;
 import beacons.logic.BeaconsController;
 import beacons.persistence.BeaconsMemoryPersistence;
 

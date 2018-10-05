@@ -7,15 +7,17 @@ import org.pipservices.commons.config.ConfigParams;
 import org.pipservices.commons.errors.ApplicationException;
 import org.pipservices.commons.refer.*;
 import beacons.clients.BeaconsHttpClientV1;
-import beacons.data.version1.BeaconV1;
 import beacons.logic.BeaconsController;
 import beacons.persistence.BeaconsMemoryPersistence;
 import beacons.services.BeaconsHttpServiceV1;
 
 public class BeaconsHttpClientV1Test {
 
-	private static final ConfigParams HttpConfig = ConfigParams.fromTuples("connection.protocol", "http",
-			"connection.host", "localhost", "connection.port", 8080);
+	private static final ConfigParams HttpConfig = ConfigParams.fromTuples(
+		"connection.protocol", "http",
+		"connection.host", "localhost",
+		"connection.port", 8080
+	);
 
 	private BeaconsMemoryPersistence _persistence;
 	private BeaconsController _controller;

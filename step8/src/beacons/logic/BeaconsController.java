@@ -65,11 +65,13 @@ public class BeaconsController implements IReferenceable, ICommandable, IBeacons
 		double lng = 0;
 		int count = 0;
 		for (BeaconV1 beacon : beacons) {
-			if (beacon.getCenter() != null && beacon.getCenter().getType().equals("Point")
-					&& beacon.getCenter().getCoordinates().length > 1) {
-				double[] coordinates = beacon.getCenter().getCoordinates();
-				lng += coordinates[0];
-				lat += coordinates[1];
+			if (beacon.getCenter() != null
+					&& beacon.getCenter().getType().equals("Point")
+					&& beacon.getCenter().getCoordinates() != null
+					&& beacon.getCenter().getCoordinates().size() > 1) {
+				List<Double> coordinates = beacon.getCenter().getCoordinates();
+				lng += coordinates.get(0);
+				lat += coordinates.get(1);
 				count += 1;
 			}
 		}
