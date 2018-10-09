@@ -1,21 +1,40 @@
-FROM node:8
+FROM maven:latest AS build
 
 # set working directory
 WORKDIR /app
 
 # Copy project file
-COPY package*.json ./
+COPY pom.xml ./
 
-# install ALL node_modules, including 'devDependencies'
-RUN npm install
+# install dependencies
+RUN mvn dependency:go-offline
 
 # copy all project
 COPY . .
 
-ENV HTTP_PORT=8080
-ENV MONGO_SERVICE_HOST=
-ENV MONGO_SERVICE_PORT=27017
+# Disable mongodb tests
+ENV MONGO_ENABLED=false
 
-EXPOSE "8080:8080"
+# compile source code
+RUN mvn package
 
-CMD [ "node", "bin/run.js" ]
+# Runtime stage
+FROM java:latest
+
+# set working directory
+WORKDIR /app
+
+# Copy compiled binaries
+COPY --from=build /app/lib ./lib
+
+# Copy configuration
+COPY config/*.* ./config/
+
+ENV MONGO_SERVICE_URI ""
+ENV MONGO_SERVICE_HOST mongo
+ENV MONGO_SERVICE_PORT 27017
+ENV MONGO_DB app
+
+EXPOSE 8080
+
+CMD ["java", "-jar", "./lib/run.jar", "-c", "./config/config.yml"]

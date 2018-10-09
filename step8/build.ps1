@@ -11,6 +11,9 @@ $container=$component.name
 if (Test-Path "obj") {
     Remove-Item -Recurse -Force -Path "obj"
 }
+if (Test-Path "lib") {
+    Remove-Item -Recurse -Force -Path "lib"
+}
 
 # Build docker image
 docker build -f docker/Dockerfile.build -t $image .
@@ -18,4 +21,5 @@ docker build -f docker/Dockerfile.build -t $image .
 # Create and copy compiled files, then destroy
 docker create --name $container $image
 docker cp "$($container):/app/obj" ./obj
+docker cp "$($container):/app/lib" ./lib
 docker rm $container

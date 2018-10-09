@@ -189,7 +189,7 @@
     </dependency>
     <dependency>
         <groupId>org.pipservices</groupId>
-        <artifactId>pip-services-rpc-java</artifactId>
+        <artifactId>pip-services-rpc</artifactId>
         <version>3.0.0-SNAPSHOT</version>
     </dependency>
     <dependency>

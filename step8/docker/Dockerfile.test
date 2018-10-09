@@ -1,15 +1,16 @@
-FROM node:8
+FROM maven:latest
 
 # set working directory
 WORKDIR /app
 
 # Copy project file
-COPY package*.json ./
+COPY pom.xml ./
 
-# install ALL node_modules, including 'devDependencies'
-RUN npm install
+# install dependencies
+RUN mvn dependency:go-offline
 
 # copy all project
 COPY . .
- 
-CMD [ "npm", "test" ]
+
+# compile source code
+CMD ["mvn", "test"]
