@@ -170,32 +170,32 @@
     <dependency>
         <groupId>org.pipservices</groupId>
         <artifactId>pip-services-commons</artifactId>
-        <version>3.0.0-SNAPSHOT</version>
+        <version>3.0.0</version>
     </dependency>
     <dependency>
         <groupId>org.pipservices</groupId>
         <artifactId>pip-services-components</artifactId>
-        <version>3.0.0-SNAPSHOT</version>
+        <version>3.0.0</version>
     </dependency>
     <dependency>
         <groupId>org.pipservices</groupId>
         <artifactId>pip-services-container</artifactId>
-        <version>3.0.0-SNAPSHOT</version>
+        <version>3.0.0</version>
     </dependency>
     <dependency>
         <groupId>org.pipservices</groupId>
         <artifactId>pip-services-data</artifactId>
-        <version>3.0.0-SNAPSHOT</version>
+        <version>3.0.0</version>
     </dependency>
     <dependency>
         <groupId>org.pipservices</groupId>
         <artifactId>pip-services-rpc</artifactId>
-        <version>3.0.0-SNAPSHOT</version>
+        <version>3.0.0</version>
     </dependency>
     <dependency>
         <groupId>org.pipservices</groupId>
         <artifactId>pip-services-mongodb</artifactId>
-        <version>3.0.0-SNAPSHOT</version>
+        <version>3.0.0</version>
     </dependency>
 	<dependency>
       <groupId>org.glassfish.jersey.core</groupId>
