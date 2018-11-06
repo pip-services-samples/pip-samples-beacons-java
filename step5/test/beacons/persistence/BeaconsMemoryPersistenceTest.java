@@ -1,8 +1,8 @@
 package beacons.persistence;
 
 import org.junit.Test;
-import org.pipservices.commons.config.*;
-import org.pipservices.commons.errors.*;
+import org.pipservices3.commons.config.*;
+import org.pipservices3.commons.errors.*;
 
 public class BeaconsMemoryPersistenceTest {
 	

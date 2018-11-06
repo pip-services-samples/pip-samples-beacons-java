@@ -1,7 +1,7 @@
 package beacons.data.version1;
 
 import org.bson.codecs.pojo.annotations.BsonProperty;
-import org.pipservices.commons.data.IStringIdentifiable;
+import org.pipservices3.commons.data.IStringIdentifiable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

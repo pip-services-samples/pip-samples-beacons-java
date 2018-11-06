@@ -2,10 +2,10 @@ package beacons.clients;
 
 import static org.junit.Assert.*;
 
-import org.pipservices.commons.data.DataPage;
-import org.pipservices.commons.data.FilterParams;
-import org.pipservices.commons.data.PagingParams;
-import org.pipservices.commons.errors.ApplicationException;
+import org.pipservices3.commons.data.DataPage;
+import org.pipservices3.commons.data.FilterParams;
+import org.pipservices3.commons.data.PagingParams;
+import org.pipservices3.commons.errors.ApplicationException;
 
 import beacons.clients.IBeaconsClientV1;
 import beacons.data.version1.BeaconTypeV1;

@@ -3,11 +3,11 @@ package beacons.clients;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.pipservices.commons.config.ConfigParams;
-import org.pipservices.commons.errors.ApplicationException;
-import org.pipservices.commons.refer.Descriptor;
-import org.pipservices.commons.refer.IReferences;
-import org.pipservices.commons.refer.References;
+import org.pipservices3.commons.config.ConfigParams;
+import org.pipservices3.commons.errors.ApplicationException;
+import org.pipservices3.commons.refer.Descriptor;
+import org.pipservices3.commons.refer.IReferences;
+import org.pipservices3.commons.refer.References;
 
 import beacons.logic.BeaconsController;
 import beacons.persistence.BeaconsMemoryPersistence;

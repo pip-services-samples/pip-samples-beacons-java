@@ -1,12 +1,12 @@
 package beacons.build;
 
-import org.pipservices.components.build.Factory;
+import org.pipservices3.components.build.Factory;
 
 import beacons.logic.BeaconsController;
 import beacons.persistence.*;
 import beacons.services.*;
 
-import org.pipservices.commons.refer.Descriptor;
+import org.pipservices3.commons.refer.Descriptor;
 
 public class BeaconsServiceFactory extends Factory {
 

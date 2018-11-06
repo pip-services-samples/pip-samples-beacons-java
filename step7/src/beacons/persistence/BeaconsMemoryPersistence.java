@@ -3,9 +3,9 @@ package beacons.persistence;
 import java.util.*;
 import java.util.function.Predicate;
 
-import org.pipservices.commons.data.*;
-import org.pipservices.commons.errors.ApplicationException;
-import org.pipservices.data.persistence.*;
+import org.pipservices3.commons.data.*;
+import org.pipservices3.commons.errors.ApplicationException;
+import org.pipservices3.data.persistence.*;
 
 import beacons.data.version1.BeaconV1;
 

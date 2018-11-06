@@ -1,7 +1,7 @@
 package beacons.build;
 
-import org.pipservices.commons.refer.Descriptor;
-import org.pipservices.components.build.Factory;
+import org.pipservices3.commons.refer.Descriptor;
+import org.pipservices3.components.build.Factory;
 
 import beacons.clients.BeaconsDirectClientV1;
 import beacons.clients.BeaconsHttpClientV1;

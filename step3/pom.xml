@@ -4,7 +4,7 @@
 
   <groupId>org.pipservices.samples</groupId>
   <artifactId>beacons</artifactId>
-  <version>3.0.0-SNAPSHOT</version>
+  <version>3.0.0</version>
   <packaging>jar</packaging>
 
   <name>Pip.Services Beacons Sample</name>
@@ -142,6 +142,14 @@
               </execution>
           </executions>
       </plugin>
+      <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.22.1</version>
+          <configuration>
+              <useSystemClassLoader>false</useSystemClassLoader>
+          </configuration>
+      </plugin>
       </plugins>
   </build>
 
@@ -169,32 +177,32 @@
   <dependencies>
     <dependency>
         <groupId>org.pipservices</groupId>
-        <artifactId>pip-services-commons</artifactId>
+        <artifactId>pip-services3-commons</artifactId>
         <version>3.0.0</version>
     </dependency>
     <dependency>
         <groupId>org.pipservices</groupId>
-        <artifactId>pip-services-components</artifactId>
+        <artifactId>pip-services3-components</artifactId>
         <version>3.0.0</version>
     </dependency>
     <dependency>
         <groupId>org.pipservices</groupId>
-        <artifactId>pip-services-container</artifactId>
+        <artifactId>pip-services3-container</artifactId>
         <version>3.0.0</version>
     </dependency>
     <dependency>
         <groupId>org.pipservices</groupId>
-        <artifactId>pip-services-data</artifactId>
+        <artifactId>pip-services3-data</artifactId>
         <version>3.0.0</version>
     </dependency>
     <dependency>
         <groupId>org.pipservices</groupId>
-        <artifactId>pip-services-rpc</artifactId>
+        <artifactId>pip-services3-rpc</artifactId>
         <version>3.0.0</version>
     </dependency>
     <dependency>
         <groupId>org.pipservices</groupId>
-        <artifactId>pip-services-mongodb</artifactId>
+        <artifactId>pip-services3-mongodb</artifactId>
         <version>3.0.0</version>
     </dependency>
 	<dependency>

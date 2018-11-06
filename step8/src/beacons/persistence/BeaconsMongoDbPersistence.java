@@ -5,9 +5,9 @@ import java.util.*;
 import org.bson.BsonDocument;
 import org.bson.BsonInt32;
 import org.bson.conversions.Bson;
-import org.pipservices.commons.data.*;
-import org.pipservices.commons.errors.*;
-import org.pipservices.mongodb.persistence.*;
+import org.pipservices3.commons.data.*;
+import org.pipservices3.commons.errors.*;
+import org.pipservices3.mongodb.persistence.*;
 import com.mongodb.client.*;
 import com.mongodb.client.model.*;
 

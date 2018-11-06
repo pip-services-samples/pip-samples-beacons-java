@@ -1,7 +1,7 @@
 package beacons.data.version1;
 
-import org.pipservices.commons.convert.TypeCode;
-import org.pipservices.commons.validate.ObjectSchema;
+import org.pipservices3.commons.convert.TypeCode;
+import org.pipservices3.commons.validate.ObjectSchema;
 
 public class BeaconV1Schema extends ObjectSchema {
 

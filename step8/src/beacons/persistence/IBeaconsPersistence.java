@@ -1,7 +1,7 @@
 package beacons.persistence;
 
-import org.pipservices.commons.data.*;
-import org.pipservices.commons.errors.*;
+import org.pipservices3.commons.data.*;
+import org.pipservices3.commons.errors.*;
 
 import beacons.data.version1.*;
 

@@ -1,9 +1,9 @@
 package beacons.persistence;
 
 import org.junit.Test;
-import org.pipservices.commons.convert.*;
-import org.pipservices.commons.config.*;
-import org.pipservices.commons.errors.*;
+import org.pipservices3.commons.convert.*;
+import org.pipservices3.commons.config.*;
+import org.pipservices3.commons.errors.*;
 
 import beacons.persistence.BeaconsMongoDbPersistence;
 

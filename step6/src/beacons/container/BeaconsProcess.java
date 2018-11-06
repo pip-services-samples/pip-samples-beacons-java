@@ -1,7 +1,7 @@
 package beacons.container;
 
-import org.pipservices.container.ProcessContainer;
-import org.pipservices.rpc.build.DefaultRpcFactory;
+import org.pipservices3.container.ProcessContainer;
+import org.pipservices3.rpc.build.DefaultRpcFactory;
 
 import beacons.build.BeaconsServiceFactory;
 

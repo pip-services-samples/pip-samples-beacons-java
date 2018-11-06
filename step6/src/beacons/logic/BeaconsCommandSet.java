@@ -2,10 +2,10 @@ package beacons.logic;
 
 import java.io.IOException;
 
-import org.pipservices.commons.commands.*;
-import org.pipservices.commons.convert.*;
-import org.pipservices.commons.data.*;
-import org.pipservices.commons.validate.*;
+import org.pipservices3.commons.commands.*;
+import org.pipservices3.commons.convert.*;
+import org.pipservices3.commons.data.*;
+import org.pipservices3.commons.validate.*;
 
 import beacons.data.version1.*;
 

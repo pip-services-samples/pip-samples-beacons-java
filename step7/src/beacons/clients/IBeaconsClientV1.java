@@ -1,7 +1,7 @@
 package beacons.clients;
 
-import org.pipservices.commons.data.*;
-import org.pipservices.commons.errors.ApplicationException;
+import org.pipservices3.commons.data.*;
+import org.pipservices3.commons.errors.ApplicationException;
 
 import beacons.data.version1.*;
 

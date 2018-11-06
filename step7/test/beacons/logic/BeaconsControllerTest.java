@@ -5,10 +5,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
-import org.pipservices.commons.config.ConfigParams;
-import org.pipservices.commons.data.*;
-import org.pipservices.commons.errors.ApplicationException;
-import org.pipservices.commons.refer.*;
+import org.pipservices3.commons.config.ConfigParams;
+import org.pipservices3.commons.data.*;
+import org.pipservices3.commons.errors.ApplicationException;
+import org.pipservices3.commons.refer.*;
 
 import beacons.data.version1.BeaconTypeV1;
 import beacons.data.version1.BeaconV1;

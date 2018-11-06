@@ -2,10 +2,10 @@ package beacons.clients;
 
 import java.util.ArrayList;
 
-import org.pipservices.commons.data.DataPage;
-import org.pipservices.commons.data.FilterParams;
-import org.pipservices.commons.data.IdGenerator;
-import org.pipservices.commons.data.PagingParams;
+import org.pipservices3.commons.data.DataPage;
+import org.pipservices3.commons.data.FilterParams;
+import org.pipservices3.commons.data.IdGenerator;
+import org.pipservices3.commons.data.PagingParams;
 
 import beacons.data.version1.BeaconV1;
 import beacons.data.version1.CenterObjectV1;

@@ -2,10 +2,10 @@ package beacons.clients;
 
 import javax.ws.rs.core.GenericType;
 
-import org.pipservices.rpc.clients.CommandableHttpClient;
-import org.pipservices.commons.data.*;
-import org.pipservices.commons.errors.ApplicationException;
-import org.pipservices.commons.run.Parameters;
+import org.pipservices3.rpc.clients.CommandableHttpClient;
+import org.pipservices3.commons.data.*;
+import org.pipservices3.commons.errors.ApplicationException;
+import org.pipservices3.commons.run.Parameters;
 
 import beacons.data.version1.*;
 

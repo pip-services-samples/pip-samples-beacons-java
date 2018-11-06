@@ -13,11 +13,11 @@ import org.glassfish.jersey.jackson.JacksonFeature;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.pipservices.commons.config.*;
-import org.pipservices.commons.data.DataPage;
-import org.pipservices.commons.errors.*;
-import org.pipservices.commons.refer.*;
-import org.pipservices.commons.run.Parameters;
+import org.pipservices3.commons.config.*;
+import org.pipservices3.commons.data.DataPage;
+import org.pipservices3.commons.errors.*;
+import org.pipservices3.commons.refer.*;
+import org.pipservices3.commons.run.Parameters;
 
 import beacons.data.version1.BeaconTypeV1;
 import beacons.data.version1.BeaconV1;
