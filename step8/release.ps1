@@ -21,4 +21,5 @@ if ($component.version -ne $version) {
 #   "pinentry-mode loopback"
 # 
 # See "Development.md" in the "doc" folder for detailed instructions.
+$env:MONGO_ENABLED = "false"
 mvn clean deploy
